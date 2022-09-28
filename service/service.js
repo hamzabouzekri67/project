@@ -6,39 +6,37 @@ const { MongoClient, ObjectID } = require('mongodb');
 
 async function login(login,password,callback){
     
- await users.findOne(
-    {$or:[{"email":login},{"phone":login}]}).then((data)=>{
-        if (data != null) {
-            console.log(data["accessToken"] )
-            if(data["email"] == login || data["phone"] == login  ){
-                if ((password != null && password != "")) {
-                    const token = auth.generatorToken(login)
-                  
-                    return callback(null , {id:data['id'],token})
-                }else{
-                   
-                  
-                    return callback({ 
-                      
-                        message:"Invailed email/password"
-                    })
-                }
-             
+ const user =await users.findOne(
+    {$or:[{"email":login},{"phone":login}]});
+    if (user != null) {
+       
+        if(user.email == login || user.phone == login  ){
+            if ((password != null && password != "")) {
+                const token = auth.generatorToken(login)
+              
+                return callback(null , {id:user.id,token})
+            }else{
                
-            }
-            else{
-                return callback({
-                    message:"User Not Existe"
+              
+                return callback({ 
+                  
+                    message:"Invailed email/password"
                 })
-             }
-          
-         }else{
+            }
+         
+           
+        }
+        else{
             return callback({
-                message:"User Not Existe"
+                message:"Invailed email/password"
             })
          }
-        
-    });
+      
+     }else{
+        return callback({
+            message:"User Not Existe"
+        })
+     }
  
 }
  async function register(params,callback){
