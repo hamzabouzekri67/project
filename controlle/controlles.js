@@ -31,7 +31,7 @@ exports.login = (req,res,next)=>{
         }
         return res.status(200).send({
             code :200, 
-            data:result
+            message:result
  
         }
            
