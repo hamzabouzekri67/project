@@ -1,13 +1,13 @@
 const bcrypt = require("bcryptjs")
 const service = require("../service/service")
 
-exports.register = (req,res,next)=>{
+exports.register =async(req,res,next)=>{
     const {password,accessToken} = req.body
-    const salt =bcrypt.genSaltSync(10)
+    const salt = await bcrypt.genSaltSync(10)
     if (password === "" || password === null) {
         
     }else{
-        req.body.password = bcrypt.hashSync(password,salt)
+        req.body.password =await bcrypt.hashSync(password,salt)
        
     }
 
@@ -15,7 +15,7 @@ exports.register = (req,res,next)=>{
         
 
      }else{
-        req.body.accessToken = bcrypt.hashSync(accessToken,salt)
+        req.body.accessToken =await bcrypt.hashSync(accessToken,salt)
       
      }
    
