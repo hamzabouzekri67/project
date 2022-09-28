@@ -4,13 +4,17 @@ const service = require("../service/service")
 exports.register =(req,res,next)=>{
     const {password,accessToken} = req.body
     const salt =  bcrypt.genSaltSync(10)
-    if (password !="" || password != null) {
-        req.body.password = bcrypt.hashSync(password,salt)
-    }
-     if (accessToken != "" || accessToken != null) {
-        req.body.accessToken = bcrypt.hashSync(accessToken,salt)
+    // if (password === "" || password === null) {
+      
+    // }else{
+    //     req.body.password = bcrypt.hashSync(password,salt)
+    // }
+    //  if (accessToken === "" || accessToken === null) {
+      
 
-     }
+    //  }else{
+    //     req.body.accessToken = bcrypt.hashSync(accessToken,salt)
+    //  }
     service.register(req.body,(err,result)=>{
         if (err) {
             return next(err)

@@ -10,9 +10,8 @@ async function login(login,password,callback){
     {$or:[{"email":login},{"phone":login}]}).then(async(data)=>{
         if (data != null) {
             console.log(data["accessToken"] )
-           const passwords= await bycrpt.compareSync(password,data["accessToken"]  != null?data["accessToken"]:data["password"])
             if(data["email"] == login || data["phone"] == login  ){
-                if ((password != null && password != "" && passwords )) {
+                if ((password != null && password != "")) {
                     const token = auth.generatorToken(login)
                   
                     return callback(null , {id:data['id'],token})
