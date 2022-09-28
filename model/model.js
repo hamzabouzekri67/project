@@ -33,9 +33,6 @@ const mongosSchema = new Schema(
             type:String,
            // required:true,
         },
-        accessToken:{
-            type:String,
-        },       
        createdAt:{
             type:String,
             
