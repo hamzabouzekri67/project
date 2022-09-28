@@ -7,7 +7,7 @@ const { MongoClient, ObjectID } = require('mongodb');
 async function login(login,password,callback){
     
  await users.findOne(
-    {$or:[{"email":login},{"phone":login}]}).then(async(data)=>{
+    {$or:[{"email":login},{"phone":login}]}).then((data)=>{
         if (data != null) {
             console.log(data["accessToken"] )
             if(data["email"] == login || data["phone"] == login  ){
