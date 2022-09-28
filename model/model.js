@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const {Schema} = mongoose
+const uniqueValidator = require("mongoose-unique-validator")
 const mongosSchema = new Schema(
     {
         username:{
@@ -54,6 +55,6 @@ mongosSchema.set("toJSON",{
 
     }
 })
-//mongosSchema.plugin("",{message: "Email already Exists"})
+mongosSchema.plugin(uniqueValidator,{message: "Email already Exists"})
 const user = mongoose.model("users",mongosSchema)
 module.exports = user

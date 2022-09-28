@@ -7,11 +7,11 @@ const { MongoClient, ObjectID } = require('mongodb');
 async function login({login,password,},callback){
     
  await users.findOne(
-    {$or:[{"email":login},{"phone":login}]}).then((data)=>{
+    {$or:[{"email":login},{"phone":login}]}).then(async(data)=>{
         if (data != null) {
-           
+           const passwords= await bycrpt.compareSync(password,data["accessToken"] != null?data["accessToken"]:data["password"])
             if(data["email"] == login || data["phone"] == login  ){
-                if (bycrpt.compareSync(password,data["accessToken"])) {
+                if ((password != null && password != "" && (passwords) )) {
                     const token = auth.generatorToken(login)
                   
                     return callback(null , {id:data['id'],token})
