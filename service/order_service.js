@@ -67,9 +67,9 @@ async function createOrder(params,callback){
                             }
                             if (result) {
 
-                               const numberCard =  cards.findOne({"cardNumber":"6011981111111113"})
+                               const numberCard =  cards.findOne({"cardNumber":params.cardNumber})
                                if (numberCard != null) {
-                               
+                             
                                }else{
                                 console.log("hhhhh")
                                 const Cardmodel =  cards({
