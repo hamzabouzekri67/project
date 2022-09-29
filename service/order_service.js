@@ -1,8 +1,8 @@
 const user= require("../model/model")
 const cards= require("../model/cardsmodel")
 const order= require("../model/ordermodel")
-
 const stripeService= require("../service/stripe_service")
+const detectCardType = require('card-detector-js')
 
 
 async function createOrder(params,callback){
@@ -60,18 +60,19 @@ async function createOrder(params,callback){
                             "cardExpYear":params.cardExpYear,
                             "cardCvc":params.cardCvc,
                             "customerId":model.stripCoustmerId,
-                        },(err,result)=>{
+                        },async(err,result)=>{
                             if (err) {
                                 
                                 return callback(err)
                             }
                             if (result) {
 
-                               const numberCard =  cards.findOne({"cardNumber":params.cardNumber})
+                               const numberCard = await cards.findOne({"cardNumber":params.cardNumber})
                                if (numberCard != null) {
+                                console.log("cardNumber is exist")
                              
                                }else{
-                                console.log("hhhhh")
+                               const  cardType = detectCardType(params.cardNumber)
                                 const Cardmodel =  cards({
                                     CardId:result.card,
                                     cardName: params.cardName,
@@ -80,6 +81,7 @@ async function createOrder(params,callback){
                                     CardExpYear: params.cardExpYear,
                                     CardCvc: params.cardCvc,
                                     customerId:  model.stripCoustmerId,
+                                    CardType:cardType
                                 })
 
                                 Cardmodel.save();

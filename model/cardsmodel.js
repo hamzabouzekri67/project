@@ -40,7 +40,12 @@ const mongosSchema = new Schema(
             unique:true,
 
         },
-       
+        CardType:{
+            type:String,
+          
+        },
+      
+      
      
         
 
