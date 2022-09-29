@@ -42,7 +42,7 @@ exports.update = (req,res,next)=>{
     })
 }
 exports.findAll = (req,res,next)=>{
-    orderService.getOrders(req.user,(err,result)=>{
+    orderService.getOrders(req.body,(err,result)=>{
         if (err) {
             return next(err);
             
