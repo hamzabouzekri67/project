@@ -33,6 +33,10 @@ const mongosSchema = new Schema(
             type:String,
            // required:true,
         },
+        stripCoustmerId:{
+            type:String,
+           // required:true,
+        },
        createdAt:{
             type:String,
             
