@@ -40,10 +40,7 @@ const mongosSchema = new Schema(
             unique:true,
 
         },
-        accountype:{
-            type:String,
-           // required:true,
-        },
+       
      
         
 
@@ -51,6 +48,6 @@ const mongosSchema = new Schema(
         timestamps:true
     }
 )
-mongosSchema.plugin(uniqueValidator,{message: "Card already Exists"})
+//mongosSchema.plugin(uniqueValidator,{message: "Card already Exists"})
 const user = mongoose.model("CustomerCards",mongosSchema)
 module.exports = user

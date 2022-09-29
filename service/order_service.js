@@ -48,8 +48,8 @@ async function createOrder(params,callback){
 
             },async function(err,CarddDB){
                 if (err) {
-                    console.log(err)
-                    callback(err)
+                  
+                    return callback(err)
                 }else{
                     if (!CarddDB) {
                        
@@ -62,11 +62,16 @@ async function createOrder(params,callback){
                             "customerId":model.stripCoustmerId,
                         },(err,result)=>{
                             if (err) {
-                             
+                                
                                 return callback(err)
                             }
                             if (result) {
+
+                               const numberCard =  cards.findOne({"cardNumber":"6011981111111113"})
+                               if (numberCard != null) {
                                
+                               }else{
+                                console.log("hhhhh")
                                 const Cardmodel =  cards({
                                     CardId:result.card,
                                     cardName: params.cardName,
@@ -79,6 +84,10 @@ async function createOrder(params,callback){
 
                                 Cardmodel.save();
                                 model.CardId = result.card
+                              
+
+                               }
+                               
                               
                                 
                             }
@@ -119,7 +128,6 @@ async function createOrder(params,callback){
                     ordermodel.save().then(async(response)=>{
                         model.orderId =response.id;
                         return  callback(null,model)
-                       console.log(model)
                     }).catch((e)=>{ 
                         return callback(e)
                     })
