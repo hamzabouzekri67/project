@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const {Schema} = mongoose
+const uniqueValidator = require("mongoose-unique-validator")
 const mongosSchema = new Schema(
     {
         cardName:{
@@ -50,5 +51,6 @@ const mongosSchema = new Schema(
         timestamps:true
     }
 )
+mongosSchema.plugin(uniqueValidator,{message: "Card already Exists"})
 const user = mongoose.model("CustomerCards",mongosSchema)
 module.exports = user
