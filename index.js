@@ -25,14 +25,7 @@ async function connectDatabase(){
 })
 }
 connectDatabase()
-// mongoose.connect(config.Mong_DB,{
-//     useNewUrlParser: true,
-//     useUnifiedTopology:true
-// }).then(()=>{
-//     console.log(`server moongos connect`)
-// }).catch(()=>{
-//     console.log(`server moongose not  connections`)
-// })
+
 
 auth.authenticationsToken.unless = unless;
 app.use(auth.authenticationsToken.unless({

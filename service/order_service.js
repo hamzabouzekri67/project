@@ -128,8 +128,14 @@ async function createOrder(params,callback){
                         amount:params.amount 
                     })
                     ordermodel.save().then(async(response)=>{
-                        model.orderId =response.id;
-                        return  callback(null,model)
+                        if (response) {
+                            model.orderId =response.id;
+                            return  callback(null,model)
+                        }else{
+                            model.orderId =response.id;
+                            return  callback(null,model)
+                        }
+                      
                     }).catch((e)=>{ 
                         return callback(e)
                     })
