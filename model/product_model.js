@@ -4,13 +4,13 @@ const mongosSchema = new Schema(
     {
         TypePropert:{
             type:String,
-            required:true,
+           
 
         },
         images : [
           {
             type:String,
-           required:true 
+          
           }
         ],
         Rooms:{
@@ -20,11 +20,10 @@ const mongosSchema = new Schema(
         },
         Price:{
             type:String,
-            required:true 
+           
         },
         desc:{
             type:String,
-            required:true,
         },
         Amenities:[
             {
