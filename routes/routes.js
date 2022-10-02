@@ -15,5 +15,7 @@ routes.get("/order",ordercontrolles.findAll)
 routes.put("/order",ordercontrolles.update)
 
 routes.post("/product",ptoductcontrolles.createPt)
+routes.get("/getproduct",ptoductcontrolles.getPt)
+
 
 module.exports = routes

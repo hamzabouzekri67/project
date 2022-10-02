@@ -8,11 +8,28 @@ exports.createPt = (req,res,next)=>{
         "rooms":req.body.rooms ,
         "descn":req.body.descn ,
         "price":req.body.price ,
-        "Amenities":req.body.amenities ,
+        "amenities":req.body.amenities ,
     
     }
    
     productService.addProduct(data,(err,result)=>{
+        if (err) {
+            return next(err);
+            
+        }
+        return res.status(200).send({
+            code :200, 
+            message:result
+ 
+        }
+           
+        )
+    })
+}
+exports.getPt = (req,res,next)=>{
+ 
+   
+    productService.getProduct((err,result)=>{
         if (err) {
             return next(err);
             

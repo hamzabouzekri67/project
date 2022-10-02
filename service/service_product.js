@@ -10,10 +10,10 @@ async function addProduct(params,callback){
        "Rooms": params.rooms,
        "desc": params.descn,
        "Price": params.price,
-       "Amenities": params.Amenities,}
+       "Amenities": params.amenities,}
     ]}).then((result)=>{
         if (result) {
-            callback(null,"Product Exists")
+           return callback(null,"Product Exists")
             
         }else{
             const addproduct = product({
@@ -22,12 +22,24 @@ async function addProduct(params,callback){
                 Rooms: params.rooms,
                 desc: params.descn,
                 Price: params.price,
-                Amenities: params.Amenities,
+                Amenities: params.amenities,
                
         
             }) 
             addproduct.save()
-            callback(null , "scusse")
+            return  callback(null , "scusse")
+            
+        }
+        
+    }).catch((e)=>{
+        return callback(e)
+    })
+}
+async function getProduct(callback){
+
+    product.find().then((result)=>{
+        if (result) {
+            callback(null,result)
             
         }
         
@@ -37,5 +49,6 @@ async function addProduct(params,callback){
 }
 
 module.exports={
-    addProduct
+    addProduct,
+    getProduct
 }
