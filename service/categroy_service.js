@@ -1,6 +1,5 @@
 const category= require("../model/categorymodel")
 const async  = require("async")
-var ObjectId = require('mongodb').ObjectID;
 
 
 async function addcategroy(params,callback){
@@ -17,14 +16,21 @@ async function addcategroy(params,callback){
             
         }else{
             if (categroyDb != null) {
-                var item = categroyDb.item.find(item => item.productes == "633a1895fc3523ddc7087cgf"); 
+                var item = categroyDb.item.find(item => item.productes == params.orderid); 
 
                if (item != null || item != undefined) {
-                console.log(item)
+                console.log(categroyDb.item)
                
                }else{
-                categroyDb.item =params.item
-                categroyDb.save()
+                var item = params.item.find(item => item.productes ); 
+                console.log(item)
+                  
+                 categroyDb.item.push({
+                        "productes":item.productes ,
+                        "category": item.category
+                         
+                 })
+                 categroyDb.save()
                }
                 return callback(null , categroyDb)
                 

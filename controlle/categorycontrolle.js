@@ -3,6 +3,7 @@ const categoryService = require("../service/categroy_service")
 exports.createcg = (req,res,next)=>{
     const data = {
         "userId":req.body.userId,
+        "orderid":req.body.orderid,
          "item":req.body.item
     
     }
