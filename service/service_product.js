@@ -36,7 +36,6 @@ async function addProduct(params,callback){
     })
 }
 async function getProduct(callback){
-
     product.find().then((result)=>{
         if (result) {
             callback(null,result)

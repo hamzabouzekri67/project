@@ -3,6 +3,7 @@ const routes  =express.Router()
 const controlles = require("../controlle/controlles")
 const ordercontrolles = require("../controlle/orderControlle")
 const ptoductcontrolles = require("../controlle/product_controlles")
+const cateogrycontrolles = require("../controlle/categorycontrolle")
 
 routes.post("/register",controlles.register)
 routes.post("/login",controlles.login)
@@ -16,6 +17,9 @@ routes.put("/order",ordercontrolles.update)
 
 routes.post("/product",ptoductcontrolles.createPt)
 routes.get("/getproduct",ptoductcontrolles.getPt)
+
+routes.post("/categroy",cateogrycontrolles.createcg)
+routes.post("/getcategroy",cateogrycontrolles.getcatg)
 
 
 module.exports = routes
