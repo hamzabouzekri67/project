@@ -4,7 +4,8 @@ exports.createcg = (req,res,next)=>{
     const data = {
         "userId":req.body.userId,
         "orderid":req.body.orderid,
-         "item":req.body.item
+        "item":req.body.item,
+        "categroy":req.body.categroy
     
     }
    

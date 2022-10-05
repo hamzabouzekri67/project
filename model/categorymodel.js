@@ -6,6 +6,11 @@ const mongosSchema = new Schema(
             type:String,
             
         },
+        category:{
+            type:String,
+            required:true ,
+          
+        },
       item:[
       
         {

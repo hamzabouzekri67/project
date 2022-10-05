@@ -15,28 +15,50 @@ async function addcategroy(params,callback){
             return callback(err)
             
         }else{
-            if (categroyDb != null) {
-                var item = categroyDb.item.find(item => item.productes == params.orderid); 
-
-               if (item != null || item != undefined) {
-                console.log(categroyDb.item)
-               
-               }else{
-                var item = params.item.find(item => item.productes ); 
-                console.log(item)
+        category.findOne({category:params.categroy},function(err,chechcategroy){
+            if (categroyDb) {
+                if (chechcategroy) {
+                    var item = categroyDb.item.find(item => item.productes == params.orderid); 
                   
-                 categroyDb.item.push({
-                        "productes":item.productes ,
-                        "category": item.category
-                         
-                 })
-                 categroyDb.save()
-               }
-                return callback(null , categroyDb)
+                   if (item != null || item != undefined || item) {
+                    console.log("exist")
+                   
+                   }else{
+                    var item = params.item.find(item => item.productes ); 
+                    console.log(item)
+                      
+                    categroyDb.item.push({
+                            "productes":item.productes ,
+                            "category": item.category
+                             
+                     })
+                     categroyDb.save()
+                   }
+                    return callback(null , chechcategroy)
+                    
+                }else{
+                    const categroyModel = category({
+                        userId:params.userId,
+                        category:params.categroy, 
+                        item:params.item
+                    })
+                    categroyModel.
+                    save()
+                    .then((response)=>{
+                        return callback(null ,categroyDb)
+                       
+                    }).catch((err)=>{
+                        return callback(err)
+                    }) 
+    
+                
+                
+                }
                 
             }else{
                 const categroyModel = category({
                     userId:params.userId,
+                    category:params.categroy, 
                     item:params.item
                 })
                 categroyModel.
@@ -48,9 +70,14 @@ async function addcategroy(params,callback){
                     return callback(err)
                 }) 
 
-            
-            
+
             }
+               
+
+            })
+           
+
+           
             
               
            
@@ -61,8 +88,8 @@ async function addcategroy(params,callback){
 }
 async function getCategroy(params,callback){
    
-   
-    category.findOne({userId:params.userId})
+    const user = await category.find({userId:"5"})
+       
     .populate({
         path:"item",
         populate:{
@@ -72,13 +99,11 @@ async function getCategroy(params,callback){
         }
       
         
-    }).then((result)=>{
-        return callback(null ,result)
-    }).catch((e)=>{
-        return callback(e)
-    })
+     })
+     return callback(null,user)
+  
 }
 module.exports ={
     addcategroy,
     getCategroy,
-}
+} 
