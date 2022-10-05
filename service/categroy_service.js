@@ -88,19 +88,24 @@ async function addcategroy(params,callback){
 }
 async function getCategroy(params,callback){
    
-    const user = await category.find({userId:"5"})
+    const user = await category.find({userId:params.userId})
        
     .populate({
         path:"item",
         populate:{
-            path:"productes"            ,
+            path:"productes",
             module:"product",
             select:"Price images Rooms TypePropert Amenities",
         }
       
         
+     }).then((result)=>{
+        return callback(null,result)
+
+     }).catch((e)=>{
+        return callback(e,user)
      })
-     return callback(null,user)
+    
   
 }
 module.exports ={
