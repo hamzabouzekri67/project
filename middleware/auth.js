@@ -13,7 +13,7 @@ function authenticationsToken(req,res,next){
     jwt.verify(token , 'realestates_Sceretkey',(err,user)=> {
         if (err) return  res.status(300).json({
              
-            "data":null
+            "data":null 
         })
         req.user = user;
         console.log(user)
