@@ -9,6 +9,9 @@ exports.createPt = (req,res,next)=>{
         "descn":req.body.descn ,
         "price":req.body.price ,
         "amenities":req.body.amenities ,
+        "bathRooms":req.body.bathRooms ,
+        "rentalPreiod":req.body.rentalPreiod ,
+
     
     }
    

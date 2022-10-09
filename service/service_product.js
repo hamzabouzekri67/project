@@ -10,7 +10,9 @@ async function addProduct(params,callback){
        "Rooms": params.rooms,
        "desc": params.descn,
        "Price": params.price,
-       "Amenities": params.amenities,}
+       "Amenities": params.amenities,
+       "bathRooms":req.body.bathRooms ,
+       "RentalPriod":req.body.rentalPreiod,}
     ]}).then((result)=>{
         if (result) {
            return callback(null,"Product Exists")
@@ -23,6 +25,8 @@ async function addProduct(params,callback){
                 desc: params.descn,
                 Price: params.price,
                 Amenities: params.amenities,
+                bathRooms:req.body.bathRooms ,
+                RentalPriod:req.body.rentalPreiod,
                
         
             }) 

@@ -18,6 +18,17 @@ const mongosSchema = new Schema(
           
 
         },
+        bathRooms:{
+            type:String,
+          
+
+        },
+        
+        RentalPriod:{
+            type:String,
+          
+
+        },
         Price:{
             type:String,
            

@@ -7,14 +7,13 @@ const mongosSchema = new Schema(
             required:true,
 
         },
-        product:{
-            type:String,
+        productes:{
+            type :mongoose.Schema.Types.ObjectId,
+            ref:"product",
             required:true,
-          
-
         },
         amount:{
-            type:Number,
+            type:String,
             required:true
         },
         orderstatus:{
