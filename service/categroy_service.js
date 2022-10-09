@@ -95,7 +95,7 @@ async function getCategroy(params,callback){
         populate:{
             path:"productes",
             module:"product",
-            select:"Price images Rooms TypePropert Amenities desc",
+            select:"Price images Rooms TypePropert Amenities desc bathRooms RentalPriod",
         }
       
         
