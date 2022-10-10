@@ -2,6 +2,7 @@ const orderService = require("../service/order_service")
 
 exports.create = (req,res,next)=>{
     const  model = {
+        id:req.body.id,
         userId :req.body.userId,
         cardName :req.body.cardName,
         cardNumber :req.body.cardNumber,

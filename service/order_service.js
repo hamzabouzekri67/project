@@ -22,14 +22,13 @@ async function createOrder(params,callback){
                     },(err,result)=>{
                         if (err) {
                            
-                            return  callback(err)
-                            
+                            return  callback("err") 
+                             
                         }
                         if (result) {
                             console.log(err)
                             UserDB.stripCoustmerId =result.id,
                             UserDB.save();
-                           
 
                             model.stripCoustmerId =result.id
                         }
@@ -120,25 +119,32 @@ async function createOrder(params,callback){
 
                         }
                     )
-
-                    const ordermodel = order({
-                        userId: UserDB.id,
-                        product: "villa",
-                        orderstatus: "pending",
-                        amount:params.amount 
-                    })
-                    ordermodel.save().then(async(response)=>{
-                        if (response) {
-                            model.orderId =response.id;
-                            return  callback(null,model)
+                    order.findOne({$and:[{"productes":params.id},{"userId":UserDB.id}]},async function(err,result){
+                        if (result) { 
+                            callback(null , params.id)
                         }else{
-                            model.orderId =response.id;
-                            return  callback(null,model)
+                            const ordermodel = order({
+                                userId: UserDB.id,
+                                productes: params.id,
+                                orderstatus: "pending", 
+                                amount:params.amount 
+                            })
+                            ordermodel.save().then(async(response)=>{
+                                if (response) {
+                                    model.orderId =response.id;
+                                    return  callback(null,model)
+                                }else{
+                                    model.orderId =response.id;
+                                    return  callback(null,model)
+                                }
+                              
+                            }).catch((e)=>{ 
+                                return callback(e)
+                            })
                         }
-                      
-                    }).catch((e)=>{ 
-                        return callback(e)
+
                     })
+                  
                 }
             })
         }
