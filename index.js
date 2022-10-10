@@ -7,7 +7,7 @@ const err = require("./middleware/errors")
 const route = require("./routes/routes")
 const {unless} = require("express-unless")
 
-const Port = process.env.PORT|| 3000
+const Port = process.env.PORT|| 8080 
 
 app.use(express.json())
 

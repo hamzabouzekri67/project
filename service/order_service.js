@@ -73,6 +73,7 @@ async function createOrder(params,callback){
                                }else{
                                const  cardType = detectCardType(params.cardNumber)
                                 const Cardmodel =  cards({
+                                    userId:UserDB.id,
                                     CardId:result.card,
                                     cardName: params.cardName,
                                     cardNumber: params.cardNumber,
@@ -172,6 +173,7 @@ order.findByIdAndUpdate(params.order,model,{useFindAndModify:false})
 }
 
 
+
 async function getOrders(params ,callback){
  
     order.findOne({userId:params.userId})
@@ -183,10 +185,25 @@ async function getOrders(params ,callback){
     })
     }
 
+async function getCard(params,callback){
+    cards.find({"userId":params.userId},async function(err,result){
+        if (err) {
+            return callback(err)
+        }
+    if (result) {
+        return callback(null ,result)
+    }else{
+        return callback(null , "not exist")
+    }
+    })
+
+}
+
 
     module.exports = { 
         createOrder,
         updateStatus,
-        getOrders
+        getOrders,
+        getCard,
 
     }

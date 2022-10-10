@@ -34,8 +34,8 @@ exports.update = (req,res,next)=>{
         }
         return res.status(200).send({
             code :200, 
-            message:"scusse",
-            data:result
+            message:result,
+          
  
         }
            
@@ -50,9 +50,25 @@ exports.findAll = (req,res,next)=>{
         }
         return res.status(200).send({
             code :200, 
+            message:result,
+           
+ 
+        }
+           
+        )
+    })
+}
+exports.findCard = (req,res,next)=>{
+    orderService.getCard(req.body,(err,result)=>{
+        if (err) {
+            return next(err);
+            
+        }
+        return res.status(200).send({
+            code :200, 
             message:"scusse",
             data:result
- 
+  
         }
            
         )

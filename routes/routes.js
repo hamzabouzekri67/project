@@ -21,5 +21,7 @@ routes.get("/getproduct",ptoductcontrolles.getPt)
 routes.post("/categroy",cateogrycontrolles.createcg)
 routes.post("/getcategroy",cateogrycontrolles.getcatg)
 
+routes.get("/getCard",ordercontrolles.findCard)
+ 
 
 module.exports = routes
