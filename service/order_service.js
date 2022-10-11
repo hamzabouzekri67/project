@@ -202,10 +202,11 @@ async function elementsCardMove(params,callback){
     cards.find({"userId":params.userId}).then((result)=>{
         if (result) {
             cards.findByIdAndUpdate(
-                { _id: ObjectId(params.id)},
+                {_id: ObjectId(params.id)},
                 {$set:{selected: params.toggle}}
              
             ).then((e)=>{
+              
                // return callback(null ,e)
             })
         
