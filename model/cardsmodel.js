@@ -3,6 +3,11 @@ const {Schema} = mongoose
 const uniqueValidator = require("mongoose-unique-validator")
 const mongosSchema = new Schema(
     {
+        selected:{
+            type:Boolean,
+            required:true
+
+        },
         userId:{
             type:String,
             required:true

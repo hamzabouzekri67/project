@@ -4,6 +4,7 @@ const order= require("../model/ordermodel")
 const stripeService= require("../service/stripe_service")
 const detectCardType = require('card-detector-js')
 
+var ObjectId = require('mongodb').ObjectID;
 
 async function createOrder(params,callback){
     user.findOne({_id:params.userId},async function(err,UserDB){
@@ -81,7 +82,8 @@ async function createOrder(params,callback){
                                     CardExpYear: params.cardExpYear,
                                     CardCvc: params.cardCvc,
                                     customerId:  model.stripCoustmerId,
-                                    CardType:cardType
+                                    CardType:cardType,
+                                    selected:false
                                 })
 
                                 Cardmodel.save();
@@ -186,15 +188,31 @@ async function getOrders(params ,callback){
     }
 
 async function getCard(params,callback){
-    cards.find({"userId":params.userId},async function(err,result){
-        if (err) {
-            return callback(err)
+    cards.find({"userId":params.userId}).sort({selected:-1}).then((result)=>{
+        if (result) {
+            return callback(null ,result)
+        }else{
+            return callback(null , "not exist")
         }
-    if (result) {
-        return callback(null ,result)
-    }else{
-        return callback(null , "not exist")
-    }
+    })
+
+}
+
+async function elementsCardMove(params,callback){
+    cards.find({"userId":params.userId}).then((result)=>{
+        if (result) {
+            cards.findByIdAndUpdate(
+                { _id: ObjectId(params.id)},
+                {$set:{selected: true}}
+             
+            ).then((e)=>{
+               // return callback(null ,e)
+            })
+        
+            return callback(null ,result)
+        }else{
+            return callback(null , "not exist")
+        }
     })
 
 }
@@ -205,5 +223,6 @@ async function getCard(params,callback){
         updateStatus,
         getOrders,
         getCard,
+        elementsCardMove,
 
     }

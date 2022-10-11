@@ -74,3 +74,19 @@ exports.findCard = (req,res,next)=>{
         )
     })
 }
+exports.moveCard = (req,res,next)=>{
+    orderService.elementsCardMove(req.body,(err,result)=>{
+        if (err) {
+            return next(err);
+            
+        }
+        return res.status(200).send({
+            code :200, 
+            message:"scusse",
+            data:result
+  
+        }
+           
+        )
+    })
+}

@@ -22,6 +22,7 @@ routes.post("/categroy",cateogrycontrolles.createcg)
 routes.post("/getcategroy",cateogrycontrolles.getcatg)
 
 routes.post("/getCard",ordercontrolles.findCard)
- 
+routes.post("/moveCard",ordercontrolles.moveCard)
+
 
 module.exports = routes
