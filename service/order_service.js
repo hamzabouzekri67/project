@@ -124,7 +124,7 @@ async function createOrder(params,callback){
                     )
                     order.findOne({$and:[{"productes":params.id},{"userId":UserDB.id}]},async function(err,result){
                         if (result) { 
-                            callback(null , params.id)
+                           return callback(null , params.id)
                         }else{
                             const ordermodel = order({
                                 userId: UserDB.id,
