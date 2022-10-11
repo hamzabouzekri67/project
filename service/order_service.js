@@ -127,7 +127,7 @@ async function createOrder(params,callback){
                            return callback(err)
                         }else{
                             if (result) {
-                                return callback(null ,"exist")
+                                //return  callback(null ,"exist")
                             }else{
                                 const ordermodel = order({
                                     userId: UserDB.id,
