@@ -122,31 +122,36 @@ async function createOrder(params,callback){
 
                         }
                     )
-                    order.findOne({$and:[{"productes":params.id},{"userId":UserDB.id}]},async function(err,result){
-                        if (result) { 
-                           return callback(null , params.id)
-                        }else{
-                            const ordermodel = order({
-                                userId: UserDB.id,
-                                productes: params.id,
-                                orderstatus: "pending", 
-                                amount:params.amount 
-                            })
-                            ordermodel.save().then(async(response)=>{
-                                if (response) {
-                                    model.orderId =response.id;
-                                    return  callback(null,model)
-                                }else{
-                                    model.orderId =response.id;
-                                    return  callback(null,model)
-                                }
+                    // order.findOne({$and:[{"productes":params.id},{"userId":UserDB.id}]},async function(err,result){
+                    //     if (result) { 
+                    //        return callback(null , params.id)
+                    //     }else{
+                    //         const ordermodel = order({
+                    //             userId: UserDB.id,
+                    //             productes: params.id,
+                    //             orderstatus: "pending", 
+                    //             amount:params.amount 
+                    //         })
+                    //         ordermodel.save().then(async(response)=>{
+                    //             if (response) {
+                    //                 model.orderId =response.id;
+                    //                 return  callback(null,model)
+                    //             }else{
+                    //                 model.orderId =response.id;
+                    //                 return  callback(null,model)
+                    //             }
                               
-                            }).catch((e)=>{ 
-                                return callback(e)
-                            })
-                        }
+                    //         }).catch((e)=>{ 
+                    //             return callback(e)
+                    //         })
+                    //     }
 
-                    })
+                    
+                    
+                    
+                    
+                    
+                    // })
                   
                 }
             })
