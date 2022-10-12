@@ -26,6 +26,6 @@ routes.post("/getCard",ordercontrolles.findCard)
 routes.post("/moveCard",ordercontrolles.moveCard)
 
 routes.post("/addBalance",balancecontrolles.createBalance)
-routes.get("/getBalance",balancecontrolles.findAll)
+routes.post("/getBalance",balancecontrolles.findAll)
 
 module.exports = routes
