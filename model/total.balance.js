@@ -20,5 +20,13 @@ const mongosSchema = new Schema(
 
     },{timestemp:true}
 )
-const user = mongoose.model("totalbalance",mongosSchema)
-module.exports = user
+mongosSchema.set("toJSON",{
+    transform:(document,returnedObject)=>{
+       returnedObject.id = returnedObject._id.toString(),
+       delete returnedObject._id;
+       delete returnedObject.__v;
+     
+    }
+})
+const balance = mongoose.model("totalbalance",mongosSchema)
+module.exports = balance

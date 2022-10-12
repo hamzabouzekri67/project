@@ -3,6 +3,7 @@ const cards= require("../model/cardsmodel")
 const balance= require("../model/balance.model")
 const stripeService= require("../service/stripe.service")
 const detectCardType = require('card-detector-js')
+const totalbalance= require("../model/total.balance")
 
 
 async function addBalace(params,callback){
@@ -154,15 +155,45 @@ async function addBalace(params,callback){
 }
 async function getBalance(params ,callback){
  
-    balance.find({userId:params.userId})
-    .then((response)=>{
+    balance.find({userId:params.userId},async function(err,response){
+        let element = 0;
         
-        return callback(null ,response)
-    
-    }).catch((r)=>{
-        return callback(null ,r)
+        if (response) {
+            for (let index = 0; index < response.length; index++) {
+                if (response[index].orderstatus == "Pending") {
+                    
+                }else{
+                      element +=response[index].amount
+                    
+                }          
+           }
+           totalbalance.findOne({userId:params.userId}).then((e)=>{
+            if (e) {
+                totalbalance.updateMany({userId:params.userId},{"totalamount":element}).then((result)=>{
+                    return callback(null ,e)
+                    
+                })
+               
+            } else {
+                const total =  totalbalance({
+                    "userId": params.userId,
+                    "orderstatus": "Success",
+                    "totalamount": element,
+                   }) 
+                   total.save()
+        
+            }
+ 
+           })
+          
+          
+
+           
+            
+        }
+
     })
-    }
+ }
 module.exports={
     addBalace,
     getBalance
