@@ -10,6 +10,7 @@ exports.createBalance = (req,res,next)=>{
         cardExpYear :req.body.cardExpYear,
         cardCvc :req.body.cardCvc,
         amount :req.body.amount,
+        createdAt:"20/20/22022"
 
     }
    

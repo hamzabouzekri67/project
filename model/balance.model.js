@@ -18,6 +18,10 @@ const mongosSchema = new Schema(
         transctionsId:{
             type:String,
         },
+        createdAt:{
+            type:String,
+            required:true,
+        }
       
 
     },{timestemp:true}

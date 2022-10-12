@@ -62,39 +62,86 @@ async function addBalace(params,callback){
                             "customerId":model.stripCoustmerId,
                         },async(err,result)=>{
                             if (err) {
-                                
-                                return callback(err)
-                            }
-                            if (result) {
-
-                               const numberCard = await cards.findOne({"cardNumber":params.cardNumber})
-                               if (numberCard != null) {
-                                console.log("cardNumber is exist")
-                             
-                               }else{
-                               const  cardType = detectCardType(params.cardNumber)
-                                const Cardmodel =  cards({
-                                    userId:UserDB.id,
-                                    CardId:result.card,
-                                    cardName: params.cardName,
-                                    cardNumber: params.cardNumber,
-                                    CardExpMonth: params.cardExpMonth,
-                                    CardExpYear: params.cardExpYear,
-                                    CardCvc: params.cardCvc,
-                                    customerId:  model.stripCoustmerId,
-                                    CardType:cardType,
-                                    selected:false
+                                const balc = balance({
+                                    userId: UserDB.id,
+                                    amount: params.amount,
+                                    orderstatus :"refuse",
+                                    createdAt:params.createdAt
+    
                                 })
-
-                                Cardmodel.save();
-                                model.CardId = result.card
-                              
-
-                               }
-                               
-                              
+                                balc.save()
+    
                                 
+                                return callback(null,balc.orderstatus == "success")
+                            }else{
+                                if (result) {
+
+                                    const numberCard = await cards.findOne({"cardNumber":params.cardNumber})
+                                    if (numberCard != null) {
+                                     console.log("cardNumber is exist")
+                                  
+                                    }else{
+                                    const  cardType = detectCardType(params.cardNumber)
+                                     const Cardmodel =  cards({
+                                         userId:UserDB.id,
+                                         CardId:result.card,
+                                         cardName: params.cardName,
+                                         cardNumber: params.cardNumber,
+                                         CardExpMonth: params.cardExpMonth,
+                                         CardExpYear: params.cardExpYear,
+                                         CardCvc: params.cardCvc,
+                                         customerId:  model.stripCoustmerId,
+                                         CardType:cardType,
+                                         selected:false
+                                     })
+     
+                                     Cardmodel.save();
+                                     model.CardId = result.card
+                                   
+     
+                                    }
+                                    const balc = balance({
+                                     userId: UserDB.id,
+                                     amount: params.amount,
+                                     orderstatus :"success",
+                                     createdAt:params.createdAt
+     
+                                 })
+                                 balc.save()
+     
+                                
+                                if (balc.orderstatus == "success") {
+                                 totalbalance.findOne({userId:UserDB.id}).then((e)=>{
+                                     if (e) {
+                                           console.log()
+                                             totalbalance.findOneAndUpdate({"userId":UserDB.id},{"totalamount": e.totalamount + params.amount}).then((result)=>{
+                                                 return callback(null ,result)
+                                                 
+                                             })
+                                        
+                                        
+                                     } else {
+                                         const total =  totalbalance({
+                                             "userId": params.userId,
+                                             "orderstatus": "Success",
+                                             "totalamount": params.amount,
+                                            }) 
+                                            total.save()
+                                 
+                                     }
+                          
+                                    })
+                                 
+                                }
+                              
+     
+                                    
+                                   
+                                     
+                                 }
+
                             }
+                          
 
                         })
                     }else{
@@ -118,25 +165,7 @@ async function addBalace(params,callback){
                                 model.paymentIntentsId = result.creatPayementIntent.id,
                                 model.client_secret = result.creatPayementIntent.client_secret
 
-                                const balc = balance({
-                                    userId: UserDB.id,
-                                    amount: params.amount,
-                                    orderstatus :"Pending"
-
-                                })
-                                balc.save().then(async(response)=>{
-                                    if (response) {
-                                      
-                                        return  callback(null,response)
-                                    }else{
-                                       
-                                        return  callback(null,"response")
-                                    }
-                                  
-                                }).catch((e)=>{ 
-                                    return callback(e)
-                                })
-
+                               
                                 //return callback(null, result.creatPayementIntent.id)
                              
 
@@ -156,41 +185,7 @@ async function addBalace(params,callback){
 async function getBalance(params ,callback){
  
     balance.find({userId:params.userId},async function(err,response){
-        let element = 0;
-        
-        if (response) {
-            for (let index = 0; index < response.length; index++) {
-                if (response[index].orderstatus == "Pending") {
-                    
-                }else{
-                      element +=response[index].amount
-                    
-                }          
-           }
-           totalbalance.findOne({userId:params.userId}).then((e)=>{
-            if (e) {
-                totalbalance.updateMany({userId:params.userId},{"totalamount":element}).then((result)=>{
-                    return callback(null ,e)
-                    
-                })
-               
-            } else {
-                const total =  totalbalance({
-                    "userId": params.userId,
-                    "orderstatus": "Success",
-                    "totalamount": element,
-                   }) 
-                   total.save()
-        
-            }
- 
-           })
-          
-          
-
-           
-            
-        }
+        return callback(null ,response)
 
     })
  }
