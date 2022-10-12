@@ -119,7 +119,7 @@ async function addBalace(params,callback){
 
                                 const balc = balance({
                                     userId: UserDB.id,
-                                    amount: 200,
+                                    amount: params.amount,
                                     orderstatus :"Pending"
 
                                 })
