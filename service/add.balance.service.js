@@ -184,7 +184,7 @@ async function addBalace(params,callback){
 }
 async function getBalance(params ,callback){
  
-    balance.find({userId:params.userId},async function(err,response){
+    totalbalance.findOne({userId:params.userId},async function(err,response){
         return callback(null ,response)
 
     })
