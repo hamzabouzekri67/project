@@ -1,4 +1,4 @@
-const categoryService = require("../service/categroy_service")
+const categoryService = require("../service/categroy.service")
 
 exports.createcg = (req,res,next)=>{
     const data = {

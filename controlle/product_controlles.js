@@ -1,4 +1,4 @@
-const productService = require("../service/service_product")
+const productService = require("../service/products.service")
 
 
 exports.createPt = (req,res,next)=>{
