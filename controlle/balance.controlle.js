@@ -10,11 +10,13 @@ exports.createBalance = (req,res,next)=>{
         cardExpYear :req.body.cardExpYear,
         cardCvc :req.body.cardCvc,
         amount :req.body.amount,
-        createdAt:"20/20/22022"
+        createdAt:req.body.createdAt
 
     }
-   
-    balanceService.addBalace(model,(err,result)=>{
+
+
+
+  balanceService.addBalance(model,(err,result)=>{
         if (err) {
             return next(err);
             

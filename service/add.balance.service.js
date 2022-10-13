@@ -14,9 +14,7 @@ async function addBalance(params,callback){
         }else{
            
             const model = {}
-            if (!UserDB.stripConsumerId) {
-              
-
+            if (!UserDB.stripCoustmerId) {
                 stripeService.createCostumer(
                     {
                         "name":UserDB.username,
@@ -24,14 +22,13 @@ async function addBalance(params,callback){
                     },(err,result)=>{
                         if (err) {
                            
-                            return  callback("err") 
+                            return  callback(err) 
                              
                         }
                         if (result) {
-                            console.log(err)
+                           
                             UserDB.stripCoustmerId =result.id,
                             UserDB.save();
-
                             model.stripCoustmerId =result.id
                         }
                     }
@@ -66,14 +63,12 @@ async function addBalance(params,callback){
                                 const balc = balance({
                                     userId: UserDB.id,
                                     amount: params.amount,
-                                    orderstatus :"refuse",
+                                    orderstatus :"Refused",
                                     createdAt:params.createdAt
     
                                 })
                                 balc.save()
-    
-                                
-                                return callback(null,balc.orderstatus == "success")
+                                return callback(err)
                             }else{
                                 if (result) {
 
@@ -87,7 +82,7 @@ async function addBalance(params,callback){
                                          userId:UserDB.id,
                                          CardId:result.card,
                                          cardName: params.cardName,
-                                         cardNumber: params.cardNumber,
+                                         cardNumber: params.cardNumber, 
                                          CardExpMonth: params.cardExpMonth,
                                          CardExpYear: params.cardExpYear,
                                          CardCvc: params.cardCvc,
@@ -104,17 +99,16 @@ async function addBalance(params,callback){
                                     const balc = balance({
                                      userId: UserDB.id,
                                      amount: params.amount,
-                                     orderstatus :"success",
+                                     orderstatus :"Success",
                                      createdAt:params.createdAt
      
                                  })
                                  balc.save()
      
                                 
-                                if (balc.orderstatus == "success") {
+                                if (balc.orderstatus == "Success") {
                                  totalbalance.findOne({userId:UserDB.id}).then((e)=>{
                                      if (e) {
-                                           console.log()
                                              totalbalance.findOneAndUpdate({"userId":UserDB.id},{"totalamount": e.totalamount + params.amount}).then((result)=>{
                                                  return callback(null ,result)
                                                  
@@ -258,18 +252,8 @@ async function getTotalBalance(params ,callback){
               
             }      
         })
-      
-      
-    
-        
-        
     }
     })
-   
-    
-   
-
-
  }
 module.exports={
     addBalance,
