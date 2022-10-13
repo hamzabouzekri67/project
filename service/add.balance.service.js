@@ -4,16 +4,17 @@ const balance= require("../model/balance.model")
 const stripeService= require("../service/stripe.service")
 const detectCardType = require('card-detector-js')
 const totalbalance= require("../model/total.balance")
+const order= require("../model/ordermodel")
 
 
-async function addBalace(params,callback){
+async function addBalance(params,callback){
     user.findOne({_id:params.userId},async function(err,UserDB){
         if (err) {
             callback(err)
         }else{
            
             const model = {}
-            if (!UserDB.stripCoustmerId) {
+            if (!UserDB.stripConsumerId) {
               
 
                 stripeService.createCostumer(
@@ -134,10 +135,7 @@ async function addBalace(params,callback){
                                  
                                 }
                               
-     
-                                    
-                                   
-                                     
+    
                                  }
 
                             }
@@ -182,14 +180,100 @@ async function addBalace(params,callback){
 
     })
 }
-async function getBalance(params ,callback){
+async function getTotalBalance(params ,callback){
  
     totalbalance.findOne({userId:params.userId},async function(err,response){
         return callback(null ,response)
 
     })
  }
+
+ async function getBalance(params ,callback){
+    balance.find({userId:params.userId},async function(err,response){
+        if (err) {
+            
+        } else {
+            if (response) {
+                return callback(null ,response)
+            }
+            
+        }
+    })
+ }
+
+ async function subtractBalance(params ,callback){
+    totalbalance.findOne({"userId":params.userId},async function (err, result){
+    if (result) {
+        if (result.totalamount >= 0) {
+            const balances = balance({
+                userId: params.userId,
+                amount: params.amount,
+                orderstatus :"subtract",
+                createdAt:"params.createdAt"
+            })
+            balances.save()
+            if (params.amount > result.totalamount) {
+              
+                return callback(null , "There is not enough balance, recharge with the required value")
+            }else{
+                totalbalance.findOneAndUpdate({"userId":params.userId},{"totalamount":result.totalamount - params.amount}).then((result)=>{
+                    return callback(null ,'success')         
+            })
+               
+            }
+           
+              
+            
+        }else{
+            return callback(null , "There is not enough balance, recharge with the required value")
+        }
+
+        order.findOne({$and:[{"productes":params.id},{"userId":params.userId}]},async function(err,result){
+            if (err) { 
+               return callback(err)
+            }else{
+                if (result) {
+                    //return  callback(null ,"exist")
+                }else{
+                    const ordermodel = order({
+                        userId: params.userId,
+                        productes: params.id,
+                        orderstatus: "pending", 
+                        amount:params.amount 
+                    })
+                    ordermodel.save().then(async(response)=>{
+                        if (response) {
+                            model.orderId =response.id;
+                            return  callback(null,model)
+                        }else{
+                            model.orderId =response.id;
+                            return  callback(null,model)
+                        }
+                      
+                    }).catch((e)=>{ 
+                        return callback(e)
+                    })
+
+                }
+              
+            }      
+        })
+      
+      
+    
+        
+        
+    }
+    })
+   
+    
+   
+
+
+ }
 module.exports={
-    addBalace,
-    getBalance
+    addBalance,
+    getTotalBalance,
+    getBalance,
+    subtractBalance
 }

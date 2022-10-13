@@ -28,4 +28,9 @@ routes.post("/moveCard",ordercontrolles.moveCard)
 routes.post("/addBalance",balancecontrolles.createBalance)
 routes.post("/getBalance",balancecontrolles.findAll)
 
+
+routes.post("/transactions",balancecontrolles.findBalance)
+routes.post("/subtract",balancecontrolles.subBalance)
+
+
 module.exports = routes

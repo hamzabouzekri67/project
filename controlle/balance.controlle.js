@@ -28,7 +28,39 @@ exports.createBalance = (req,res,next)=>{
     })
 }
 exports.findAll = (req,res,next)=>{
+    balanceService.getTotalBalance(req.body,(err,result)=>{
+        if (err) {
+            return next(err);
+            
+        }
+        return res.status(200).send({
+            code :200, 
+            message:result,
+           
+ 
+        }
+           
+        )
+    })
+}
+exports.findBalance = (req,res,next)=>{
     balanceService.getBalance(req.body,(err,result)=>{
+        if (err) {
+            return next(err);
+            
+        }
+        return res.status(200).send({
+            code :200, 
+            message:result,
+           
+ 
+        }
+           
+        )
+    })
+}
+exports.subBalance = (req,res,next)=>{
+    balanceService.subtractBalance(req.body,(err,result)=>{
         if (err) {
             return next(err);
             
