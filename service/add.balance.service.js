@@ -163,17 +163,17 @@ const totalamount = async function(params ,callback ,type){
 
 }
 const addDetailesBlanance = async function(params ,callback ,type){
-    balance.findOne({$and:[{"userId":params.userId},{"date":params.date}]},async function(err,result){
+    balance.findOne({$and:[{"userId":params.userId},{"date":datetime.toISOString().slice(0,10)}]},async function(err,result){
         if (result) {
    console.log(result)
             var date = result.date == datetime.toISOString().slice(0,10); 
-        
+             console.log()
             if (date) {                                               
                 result.details.push({
                     "amount":params.amount,
                     "orderstatus":type,
                     "transctionsId":params.transctionsId,
-                    "createdAt":params.createdAt
+                    "createdAt":Date().match(/(\d{2}:){2}\d{2}/)[0]
              })
              result.save()
              totalamount(params ,callback ,type)
@@ -188,7 +188,7 @@ const addDetailesBlanance = async function(params ,callback ,type){
                               "amount":params.amount,
                               "orderstatus":type,
                               "transctionsId":params.transctionsId,
-                              "createdAt":params.createdAt
+                              "createdAt":Date().match(/(\d{2}:){2}\d{2}/)[0]
                         }
                     ],
                   
@@ -208,7 +208,7 @@ const addDetailesBlanance = async function(params ,callback ,type){
                           "amount":params.amount,
                           "orderstatus":type,
                           "transctionsId":params.transctionsId,
-                          "createdAt":params.createdAt
+                          "createdAt":Date().match(/(\d{2}:){2}\d{2}/)[0]
                     }
                 ],
               
@@ -224,6 +224,7 @@ const addDetailesBlanance = async function(params ,callback ,type){
 async function getTotalBalance(params ,callback){
  
     totalbalance.findOne({userId:params.userId},async function(err,response){
+       
         return callback(null ,response)
 
     })
@@ -231,9 +232,9 @@ async function getTotalBalance(params ,callback){
 
  async function getBalance(params ,callback){
     balance.find({userId:params.userId}).sort({"date":-1}).then((result)=>{
-      
+        
             if (result) {
-                return callback(null ,result)
+                return callback(null ,result )
             }
             
         
