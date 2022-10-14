@@ -229,15 +229,13 @@ async function getTotalBalance(params ,callback){
  }
 
  async function getBalance(params ,callback){
-    balance.find({userId:params.userId},async function(err,response){
-        if (err) {
-            
-        } else {
-            if (response) {
-                return callback(null ,response)
+    balance.find({userId:params.userId}).sort({"date":-1}).then((result)=>{
+      
+            if (result) {
+                return callback(null ,result)
             }
             
-        }
+        
     })
  }
 
