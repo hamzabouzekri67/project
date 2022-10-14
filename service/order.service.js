@@ -190,6 +190,7 @@ order.findByIdAndUpdate(params.order,model,{useFindAndModify:false})
 async function getOrders(params ,callback){
  
     order.find({userId:params.userId})
+    .populate("productes",)
     .then((response)=>{
         return callback(null ,response)
     

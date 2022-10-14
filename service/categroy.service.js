@@ -75,21 +75,13 @@ async function addcategroy(params,callback){
                
 
             })
-           
-
-           
-            
-              
-           
-
         }
        
     })
 }
 async function getCategroy(params,callback){
    
-    const user = await category.find({userId:params.userId})
-       
+    const user = await category.find({userId:params.userId})       
     .populate({
         path:"item",
         populate:{
