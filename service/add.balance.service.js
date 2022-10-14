@@ -59,8 +59,7 @@ async function addBalance(params,callback){
                             "cardCvc":params.cardCvc,
                             "customerId":model.stripCoustmerId,
                         },async(err,result)=>{
-                            if (err) {
-                                addDetailesBlanance(params ,callback ,"Reject")
+                            if (err) {                             
                                 return callback(err)
                             }else{
                                 if (result) {
