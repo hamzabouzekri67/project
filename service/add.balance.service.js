@@ -172,7 +172,7 @@ const addDetailesBlanance = async function(params ,callback ,type){
                 result.details.push({
                     "amount":params.amount,
                     "orderstatus":type,
-                    "transctionsId":params.transctionsId,
+                    "transctionsId":"#"+ Math.floor(Math.random() * (9999999999 - 1111111111 + 1)),
                     "createdAt":Date().match(/(\d{2}:){2}\d{2}/)[0]
              })
              result.save()
@@ -187,7 +187,7 @@ const addDetailesBlanance = async function(params ,callback ,type){
                         {
                               "amount":params.amount,
                               "orderstatus":type,
-                              "transctionsId":params.transctionsId,
+                              "transctionsId":"#"+ Math.floor(Math.random() * (9999999999 - 1111111111 + 1)),
                               "createdAt":Date().match(/(\d{2}:){2}\d{2}/)[0]
                         }
                     ],
@@ -207,7 +207,7 @@ const addDetailesBlanance = async function(params ,callback ,type){
                     {
                           "amount":params.amount,
                           "orderstatus":type,
-                          "transctionsId":params.transctionsId,
+                          "transctionsId":"#"+ Math.floor(Math.random() * (9999999999 - 1111111111 + 1)),
                           "createdAt":Date().match(/(\d{2}:){2}\d{2}/)[0]
                     }
                 ],

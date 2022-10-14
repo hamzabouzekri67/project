@@ -13,7 +13,7 @@ routes.post("/getdata",controlles.getdata)
 routes.post("/updateData",controlles.updateData)
 
 routes.post("/order",ordercontrolles.create)
-routes.get("/order",ordercontrolles.findAll)
+routes.post("/findorder",ordercontrolles.findAll)
 routes.put("/order",ordercontrolles.update)
 
 routes.post("/product",ptoductcontrolles.createPt)
