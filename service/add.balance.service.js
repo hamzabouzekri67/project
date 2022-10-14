@@ -166,7 +166,7 @@ const addDetailesBlanance = async function(params ,callback ,type){
     balance.findOne({$and:[{"userId":params.userId},{"date":params.date}]},async function(err,result){
         if (result) {
    console.log(result)
-            var date = result.date == params.date; 
+            var date = result.date == datetime.toISOString().slice(0,10); 
         
             if (date) {                                               
                 result.details.push({
