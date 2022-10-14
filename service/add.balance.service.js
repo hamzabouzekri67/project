@@ -5,6 +5,7 @@ const stripeService= require("../service/stripe.service")
 const detectCardType = require('card-detector-js')
 const totalbalance= require("../model/total.balance")
 const order= require("../model/ordermodel")
+var datetime = new Date();
 
 
 async function addBalance(params,callback){
@@ -181,7 +182,7 @@ const addDetailesBlanance = async function(params ,callback ,type){
             }else{
                 const DetailesBalance = balance({
                     userId: params.userId,
-                    date:params.date,
+                    date:datetime.toISOString().slice(0,10),
                     details:[
                         {
                               "amount":params.amount,
@@ -201,7 +202,7 @@ const addDetailesBlanance = async function(params ,callback ,type){
         }else{
             const DetailesBalance = balance({
                 userId: params.userId,
-                date:params.date,
+                date:datetime.toISOString().slice(0,10),
                 details:[
                     {
                           "amount":params.amount,
