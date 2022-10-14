@@ -7,21 +7,33 @@ const mongosSchema = new Schema(
             required:true,
 
         },
-        amount:{
-            type:Number,
-            required:true
-        },
-        orderstatus:{
+        date:{
             type:String,
             required:true,
         },
-        transctionsId:{
-            type:String,
-        },
-        createdAt:{
-            type:String,
-            required:true,
-        }
+        details:[
+            {
+                amount:{
+                    type:Number,
+                    required:true
+                },
+                orderstatus:{
+                    type:String,
+                    required:true,
+                },
+                transctionsId:{
+                    type:String,
+                    
+                },
+                createdAt:{
+                    type:String,
+                    required:true,
+                }
+
+            }
+
+        ]
+       
       
 
     },{timestemp:true}

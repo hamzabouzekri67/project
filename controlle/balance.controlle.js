@@ -10,7 +10,10 @@ exports.createBalance = (req,res,next)=>{
         cardExpYear :req.body.cardExpYear,
         cardCvc :req.body.cardCvc,
         amount :req.body.amount,
-        createdAt:req.body.createdAt
+        createdAt:req.body.createdAt,
+        orderstatus:req.body.orderstatus,
+        transctionsId:req.body.transctionsId,
+        date:req.body.date
 
     }
 

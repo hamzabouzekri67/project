@@ -60,14 +60,7 @@ async function addBalance(params,callback){
                             "customerId":model.stripCoustmerId,
                         },async(err,result)=>{
                             if (err) {
-                                const balc = balance({
-                                    userId: UserDB.id,
-                                    amount: params.amount,
-                                    orderstatus :"Refused",
-                                    createdAt:params.createdAt
-    
-                                })
-                                balc.save()
+                                addDetailesBlanance(params ,callback ,"Reject")
                                 return callback(err)
                             }else{
                                 if (result) {
@@ -96,38 +89,9 @@ async function addBalance(params,callback){
                                    
      
                                     }
-                                    const balc = balance({
-                                     userId: UserDB.id,
-                                     amount: params.amount,
-                                     orderstatus :"Success",
-                                     createdAt:params.createdAt
-     
-                                 })
-                                 balc.save()
-     
-                                
-                                if (balc.orderstatus == "Success") {
-                                 totalbalance.findOne({userId:UserDB.id}).then((e)=>{
-                                     if (e) {
-                                             totalbalance.findOneAndUpdate({"userId":UserDB.id},{"totalamount": e.totalamount + params.amount}).then((result)=>{
-                                                 return callback(null ,result)
+                                    addDetailesBlanance(params ,callback ,"Success")
                                                  
-                                             })
-                                        
-                                        
-                                     } else {
-                                         const total =  totalbalance({
-                                             "userId": params.userId,
-                                             "orderstatus": "Success",
-                                             "totalamount": params.amount,
-                                            }) 
-                                            total.save()
-                                 
-                                     }
-                          
-                                    })
-                                 
-                                }
+                               
                               
     
                                  }
@@ -158,7 +122,6 @@ async function addBalance(params,callback){
                                 model.client_secret = result.creatPayementIntent.client_secret
 
                                
-                                //return callback(null, result.creatPayementIntent.id)
                              
 
                              
@@ -174,6 +137,90 @@ async function addBalance(params,callback){
 
     })
 }
+const totalamount = async function(params ,callback ,type){
+     if (type == "Success") {
+        totalbalance.findOne({userId:params.userId}).then((e)=>{
+       if (e) {
+                totalbalance.findOneAndUpdate({"userId":params.userId},{"totalamount": e.totalamount + params.amount}).then((result)=>{
+               
+                
+            })
+        
+        
+       } else {
+        const total =  totalbalance({
+            "userId": params.userId,
+            "orderstatus": "Success",
+            "totalamount": params.amount,
+            }) 
+            total.save()
+ 
+    }
+
+    })
+
+}
+
+}
+const addDetailesBlanance = async function(params ,callback ,type){
+    balance.findOne({$and:[{"userId":params.userId},{"date":params.date}]},async function(err,result){
+        if (result) {
+   console.log(result)
+            var date = result.date == params.date; 
+        
+            if (date) {                                               
+                result.details.push({
+                    "amount":params.amount,
+                    "orderstatus":type,
+                    "transctionsId":params.transctionsId,
+                    "createdAt":params.createdAt
+             })
+             result.save()
+             totalamount(params ,callback ,type)
+             return   type === 'Reject'?null: callback(null ,result)
+                       
+            }else{
+                const DetailesBalance = balance({
+                    userId: params.userId,
+                    date:params.date,
+                    details:[
+                        {
+                              "amount":params.amount,
+                              "orderstatus":type,
+                              "transctionsId":params.transctionsId,
+                              "createdAt":params.createdAt
+                        }
+                    ],
+                  
+
+                })
+                DetailesBalance.save()
+                totalamount(params ,callback ,type)
+                return   type === 'Reject'?null:callback(null ,DetailesBalance)
+                
+            }
+        }else{
+            const DetailesBalance = balance({
+                userId: params.userId,
+                date:params.date,
+                details:[
+                    {
+                          "amount":params.amount,
+                          "orderstatus":type,
+                          "transctionsId":params.transctionsId,
+                          "createdAt":params.createdAt
+                    }
+                ],
+              
+
+            })
+            DetailesBalance.save()
+            totalamount(params ,callback ,type)
+        return   type === 'Reject'?null:callback(null ,DetailesBalance)
+        }
+
+    })
+   }
 async function getTotalBalance(params ,callback){
  
     totalbalance.findOne({userId:params.userId},async function(err,response){
@@ -198,20 +245,15 @@ async function getTotalBalance(params ,callback){
  async function subtractBalance(params ,callback){
     totalbalance.findOne({"userId":params.userId},async function (err, result){
     if (result) {
-        if (result.totalamount >= 0) {
-            const balances = balance({
-                userId: params.userId,
-                amount: params.amount,
-                orderstatus :"subtract",
-                createdAt:"params.createdAt"
-            })
-            balances.save()
+        if (result.totalamount > 0 && params.amount <= result.totalamount && params.amount >= 0) {
+
+            addDetailesBlanance(params ,callback ,"Subtract")
             if (params.amount > result.totalamount) {
               
                 return callback(null , "There is not enough balance, recharge with the required value")
             }else{
                 totalbalance.findOneAndUpdate({"userId":params.userId},{"totalamount":result.totalamount - params.amount}).then((result)=>{
-                    return callback(null ,'success')         
+                    
             })
                
             }
@@ -232,7 +274,7 @@ async function getTotalBalance(params ,callback){
                     const ordermodel = order({
                         userId: params.userId,
                         productes: params.id,
-                        orderstatus: "pending", 
+                        orderstatus: "Pending", 
                         amount:params.amount 
                     })
                     ordermodel.save().then(async(response)=>{
