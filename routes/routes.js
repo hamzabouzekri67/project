@@ -15,6 +15,8 @@ routes.post("/updateData",controlles.updateData)
 routes.post("/order",ordercontrolles.create)
 routes.post("/findorder",ordercontrolles.findAll)
 routes.put("/order",ordercontrolles.update)
+routes.post("/deletedOrder",ordercontrolles.deletedOrder)
+
 
 routes.post("/product",ptoductcontrolles.createPt)
 routes.get("/getproduct",ptoductcontrolles.getPt)

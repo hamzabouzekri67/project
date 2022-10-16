@@ -7,6 +7,16 @@ const mongosSchema = new Schema(
             required:true,
 
         },
+        orderId:{
+            type:String,
+            required:true,
+
+        },
+        createdAt:{
+            type:String,
+            required:true,
+
+        },
         productes:{
             type :mongoose.Schema.Types.ObjectId,
             ref:"product",

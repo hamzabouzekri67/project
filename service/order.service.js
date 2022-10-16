@@ -127,10 +127,12 @@ async function createOrder(params,callback){
                            return callback(err)
                         }else{
                             if (result) {
-                                //return  callback(null ,"exist")
+                                return  callback(null ,"exist")
                             }else{
                                 const ordermodel = order({
                                     userId: UserDB.id,
+                                    orderId:Math.floor(Math.random() * (99999 - 11111 + 1)),
+                                    createdAt:`${Date().slice(4,10)} ${Date().match(/(\d{2}:){2}\d{2}/)[0]}`,
                                     productes: params.id,
                                     orderstatus: "pending", 
                                     amount:params.amount 
@@ -138,7 +140,7 @@ async function createOrder(params,callback){
                                 ordermodel.save().then(async(response)=>{
                                     if (response) {
                                         model.orderId =response.id;
-                                        return  callback(null,model)
+                                        return  callback(null,response)
                                     }else{
                                         model.orderId =response.id;
                                         return  callback(null,model)
@@ -187,7 +189,7 @@ order.findByIdAndUpdate(params.order,model,{useFindAndModify:false})
 
 
 
-async function getOrders(params ,callback){
+async function FetchOrders(params ,callback){
  
     order.find({userId:params.userId})
     .populate("productes",)
@@ -197,7 +199,16 @@ async function getOrders(params ,callback){
     }).catch((r)=>{
         return callback(null ,r)
     })
-    }
+}
+async function DeletedOrders(params ,callback){
+    order.findOneAndDelete({_id: ObjectId(params.id)})
+    .then((result)=>{
+        return callback(null ,"deleted Scusse")
+    })
+}
+
+
+
 
 async function getCard(params,callback){
     cards.find({"userId":params.userId}).sort({selected:-1}).then((result)=>{
@@ -210,7 +221,9 @@ async function getCard(params,callback){
 
 }
 
-async function elementsCardMove(params,callback){
+
+
+async function sortElementCard(params,callback){
     cards.find({"userId":params.userId}).then((result)=>{
         if (result) {
             cards.findByIdAndUpdate(
@@ -234,8 +247,9 @@ async function elementsCardMove(params,callback){
     module.exports = { 
         createOrder,
         updateStatus,
-        getOrders,
+        FetchOrders,
         getCard,
-        elementsCardMove,
+        sortElementCard,
+        DeletedOrders,
 
     }

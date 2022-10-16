@@ -43,7 +43,7 @@ exports.update = (req,res,next)=>{
     })
 }
 exports.findAll = (req,res,next)=>{
-    orderService.getOrders(req.body,(err,result)=>{
+    orderService.FetchOrders(req.body,(err,result)=>{
         if (err) {
             return next(err);
             
@@ -75,7 +75,23 @@ exports.findCard = (req,res,next)=>{
     })
 }
 exports.moveCard = (req,res,next)=>{
-    orderService.elementsCardMove(req.body,(err,result)=>{
+    orderService.sortElementCard(req.body,(err,result)=>{
+        if (err) {
+            return next(err);
+            
+        }
+        return res.status(200).send({
+            code :200, 
+            message:"scusse",
+            data:result
+  
+        }
+           
+        )
+    })
+}
+exports.deletedOrder = (req,res,next)=>{
+    orderService.DeletedOrders(req.body,(err,result)=>{
         if (err) {
             return next(err);
             
