@@ -10,6 +10,7 @@ exports.create = (req,res,next)=>{
         cardExpYear :req.body.cardExpYear,
         cardCvc :req.body.cardCvc,
         amount :req.body.amount,
+        time:req.body.time
 
     }
    
