@@ -132,7 +132,7 @@ async function createOrder(params,callback){
                                 const ordermodel = order({
                                     userId: UserDB.id,
                                     orderId:Math.floor(Math.random() * (99999 - 11111 + 1)),
-                                    createdAt:`${new  Date().toJSON()}`,
+                                    createdAt:params.time,
                                     productes: params.id,
                                     orderstatus: "pending", 
                                     amount:params.amount 
