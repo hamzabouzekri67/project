@@ -20,7 +20,7 @@ async function addcomments(params ,callback) {
     
 }
 async function fetchcomments(params ,callback) {
-    comments.find({productsId:params.productsId})
+    comments.find({productsId:params.productsId}).sort({createdAt : -1})
     .populate('userId',)
     .then((response)=>{
         return callback(null ,response
