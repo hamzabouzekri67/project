@@ -5,6 +5,7 @@ const ordercontrolles = require("../controlle/orderControlle")
 const ptoductcontrolles = require("../controlle/product_controlles")
 const cateogrycontrolles = require("../controlle/categorycontrolle")
 const balancecontrolles = require("../controlle/balance.controlle")
+const commentscontrolles = require("../controlle/comments.controlles")
 
 routes.post("/register",controlles.register)
 routes.post("/login",controlles.login)
@@ -34,5 +35,7 @@ routes.post("/getBalance",balancecontrolles.findAll)
 routes.post("/transactions",balancecontrolles.findBalance)
 routes.post("/subtract",balancecontrolles.subBalance)
 
+routes.post("/comments",commentscontrolles.Addcomments)
+routes.post("/fetchComments",commentscontrolles.fetchComments)
 
 module.exports = routes
