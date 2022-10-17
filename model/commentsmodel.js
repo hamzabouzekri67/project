@@ -14,7 +14,7 @@ const mongosSchema = new Schema(
         },
         comment:{
             type:String,
-            required: true
+           // required: true
         },
         createdAt:{
             type:String,
