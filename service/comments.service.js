@@ -23,7 +23,8 @@ async function fetchcomments(params ,callback) {
     comments.find({productsId:params.productsId})
     .populate('userId',)
     .then((response)=>{
-        return callback(null ,response)
+        return callback(null ,response
+        )
     
     }).catch((r)=>{
         return callback(null ,r)
