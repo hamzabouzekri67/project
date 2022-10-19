@@ -16,6 +16,10 @@ const mongosSchema = new Schema(
             type:String,
            // required: true
         },
+        demicelHex:{
+            type:Number,
+
+        },
         createdAt:{
             type:String,
             required:true
