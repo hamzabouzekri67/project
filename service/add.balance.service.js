@@ -140,8 +140,11 @@ async function addBalance(params,callback){
 const totalamount = async function(params ,callback ,type){
      if (type == "Success") {
         totalbalance.findOne({userId:params.userId}).then((e)=>{
+         
+           
        if (e) {
-                totalbalance.findOneAndUpdate({"userId":params.userId},{"totalamount": e.totalamount + params.amount}).then((result)=>{
+       
+                totalbalance.findOneAndUpdate({"userId":params.userId},{totalamount: Number(e.totalamount + (params.amount))}).then((result)=>{
                
                 
             })
@@ -169,23 +172,23 @@ const addDetailesBlanance = async function(params ,callback ,type){
             var date = result.date == datetime.toISOString().slice(0,10); 
              console.log()
             if (date) {                                               
-                result.details.push({
-                    "amount":params.amount,
+                result.details.push({ 
+                    "amount": params.amount ,  
                     "orderstatus":type,
                     "transctionsId":"#"+ Math.floor(Math.random() * (9999999999 - 1111111111 + 1)),
                     "createdAt":Date().match(/(\d{2}:){2}\d{2}/)[0]
              })
              result.save()
-             totalamount(params ,callback ,type)
-             return   type === 'Reject'?null: callback(null ,result)
+             totalamount(params ,callback ,type) 
+             return   callback(null ,result)
                        
             }else{
-                const DetailesBalance = balance({
+                const DetailesBalance = balance({ 
                     userId: params.userId,
-                    date:datetime.toISOString().slice(0,10),
+                    date:datetime.toISOString().slice(0,10), 
                     details:[
                         {
-                              "amount":params.amount,
+                              "amount": params.amount,
                               "orderstatus":type,
                               "transctionsId":"#"+ Math.floor(Math.random() * (9999999999 - 1111111111 + 1)),
                               "createdAt":Date().match(/(\d{2}:){2}\d{2}/)[0]
@@ -196,7 +199,7 @@ const addDetailesBlanance = async function(params ,callback ,type){
                 })
                 DetailesBalance.save()
                 totalamount(params ,callback ,type)
-                return   type === 'Reject'?null:callback(null ,DetailesBalance)
+                return  callback(null ,DetailesBalance)
                 
             }
         }else{
@@ -205,7 +208,7 @@ const addDetailesBlanance = async function(params ,callback ,type){
                 date:datetime.toISOString().slice(0,10),
                 details:[
                     {
-                          "amount":params.amount,
+                          "amount": params.amount,
                           "orderstatus":type,
                           "transctionsId":"#"+ Math.floor(Math.random() * (9999999999 - 1111111111 + 1)),
                           "createdAt":Date().match(/(\d{2}:){2}\d{2}/)[0]
@@ -216,7 +219,7 @@ const addDetailesBlanance = async function(params ,callback ,type){
             })
             DetailesBalance.save()
             totalamount(params ,callback ,type)
-        return   type === 'Reject'?null:callback(null ,DetailesBalance)
+        return  callback(null ,DetailesBalance)
         }
 
     })
@@ -251,7 +254,7 @@ async function getTotalBalance(params ,callback){
               
                 return callback(null , "There is not enough balance, recharge with the required value")
             }else{
-                totalbalance.findOneAndUpdate({"userId":params.userId},{"totalamount":result.totalamount - params.amount}).then((result)=>{
+                totalbalance.findOneAndUpdate({"userId":params.userId},{"totalamount":Number(result.totalamount - params.amount).toFixed(2)}).then((result)=>{
                     
             })
                
@@ -274,7 +277,7 @@ async function getTotalBalance(params ,callback){
                         userId: params.userId,
                         productes: params.id,
                         orderstatus: "Pending", 
-                        amount:params.amount 
+                        amount:params.amount  
                     })
                     ordermodel.save().then(async(response)=>{
                         if (response) {

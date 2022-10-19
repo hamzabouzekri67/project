@@ -4,7 +4,7 @@ const gradient = require('gradient-color')
 
 async function addcomments(params ,callback) {
     const color = [
-        0xffFF0000,0xffFFFF00,0xffCD5C5C,
+        0xffFF0000,0xffE29587,0xffCD5C5C,
         0xff9FE2BF,0xff6495ED,0xffD39D38,
         0xffff6a00,0xfff8b500,0xffa044ff,
         0xff799F0C,0xff536976,0xff2b5876]

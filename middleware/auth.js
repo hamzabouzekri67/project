@@ -27,7 +27,7 @@ function authenticationsToken(req,res,next){
 
 function generatorToken(username){
    return jwt.sign({data:username},"realestates_Sceretkey",{
-        expiresIn : "10d"
+        expiresIn : "100d"
     })
 
 }
