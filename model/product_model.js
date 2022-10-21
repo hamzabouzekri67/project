@@ -43,8 +43,13 @@ const mongosSchema = new Schema(
 
             }
         ],
-         
-       createdAt:{
+
+        place:{
+            type:String,
+            
+        },
+
+        createdAt:{
             type:String,
             
         }

@@ -11,6 +11,7 @@ exports.createPt = (req,res,next)=>{
         "amenities":req.body.amenities ,
         "bathRooms":req.body.bathRooms ,
         "rentalPreiod":req.body.rentalPreiod ,
+        "place":req.body.place
 
     
     }
