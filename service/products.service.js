@@ -35,7 +35,7 @@ async function addProduct(params,callback){
                 place:params.place,
                 city:params.city,
                 country:params.country,
-                latitude:params.latitude,
+                latitude:params.latitude, 
                 longitude:params.longitude
 
                
