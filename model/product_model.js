@@ -58,6 +58,11 @@ const mongosSchema = new Schema(
             required:true,
             
         },
+        city:{
+            type:String,
+            required:true,
+            
+        },
 
         createdAt:{
             type:String,
