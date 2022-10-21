@@ -13,7 +13,10 @@ exports.createPt = (req,res,next)=>{
         "rentalPreiod":req.body.rentalPreiod ,
         "place":req.body.place,
         "city":req.body.city,
-        "country":req.body.country
+        "country":req.body.country,
+        "latitude":req.body.latitude,
+        "longitude":req.body.longitude
+
 
      
     }

@@ -68,7 +68,16 @@ const mongosSchema = new Schema(
             required:true,
             
         },
+        latitude:{
+            type:String,
+            required:true,
 
+        },
+        longitude:{
+            type:String,
+            required:true,
+
+        },
         createdAt:{
             type:String,
             
