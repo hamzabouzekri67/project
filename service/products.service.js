@@ -16,8 +16,8 @@ async function addProduct(params,callback){
        "place":params.place,
        "city":params.city,
        "country":params.country,
-       "latitude":req.body.latitude,
-       "longitude":req.body.longitude}
+       "latitude":params.latitude,
+       "longitude":params.longitude}
     ]}).then((result)=>{
         if (result) {
            return callback(null,"Product Exists")
@@ -35,8 +35,8 @@ async function addProduct(params,callback){
                 place:params.place,
                 city:params.city,
                 country:params.country,
-                latitude:req.body.latitude,
-                longitude:req.body.longitude
+                latitude:params.latitude,
+                longitude:params.longitude
 
                
         
