@@ -13,7 +13,7 @@ exports.createPt = (req,res,next)=>{
         "rentalPreiod":req.body.rentalPreiod ,
         "place":req.body.place
 
-    
+     
     }
    
     productService.addProduct(data,(err,result)=>{

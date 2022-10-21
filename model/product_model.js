@@ -4,41 +4,50 @@ const mongosSchema = new Schema(
     {
         TypePropert:{
             type:String,
+            required:true,
+            
            
 
         },
         images : [
           {
             type:String,
+            required:true,
           
           }
         ],
         Rooms:{
             type:String,
+            required:true,
           
 
         },
         bathRooms:{
             type:String,
+            required:true,
           
 
         },
         
         RentalPriod:{
             type:String,
+            required:true,
           
 
         },
         Price:{
             type:String,
+            required:true,
            
         },
         desc:{
             type:String,
+            required:true,
         },
         Amenities:[
             {
             type:String, 
+            required:true,
         
 
             }
@@ -46,6 +55,7 @@ const mongosSchema = new Schema(
 
         place:{
             type:String,
+            required:true,
             
         },
 
