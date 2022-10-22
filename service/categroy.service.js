@@ -87,7 +87,7 @@ async function getCategroy(params,callback){
         populate:{
             path:"productes",
             module:"product",
-            select:"Price images Rooms TypePropert Amenities desc bathRooms RentalPriod",
+            select:"Price images Rooms TypePropert Amenities desc bathRooms RentalPriod place country city latitude longitude",
         }
       
         
