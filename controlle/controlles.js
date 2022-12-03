@@ -1,9 +1,9 @@
 const bcrypt = require("bcryptjs")
 const service = require("../service/service")
 
-exports.register =(req,res,next)=>{
+exports.register = async (req,res,next)=>{
     const {password} = req.body
-    const salt =  bcrypt.genSaltSync(10)
+    const salt = await bcrypt.genSaltSync(10)
     if (password === "" || password === null) {
       
     }else{
