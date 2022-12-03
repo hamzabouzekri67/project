@@ -38,7 +38,7 @@ const mongosSchema = new Schema(
            // required:true,
         },
        createdAt:{
-            type:String,
+            type:String, 
             
         }
       
