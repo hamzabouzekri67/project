@@ -11,7 +11,7 @@ async function login(login,password,callback){
     if (user != null) {
        
         if(user.email == login || user.phone == login  ){
-            const comparePassword = await bycrpt.compareSync(password ,user.password)
+            const comparePassword =  bycrpt.compareSync(password ,user.password)
             if ((password != null && comparePassword != "")) {
                 const token = auth.generatorToken(login)
               
