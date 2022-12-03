@@ -90,6 +90,7 @@ async function addBalance(params,callback){
      
                                     }
                                     addDetailesBlanance(params ,callback ,"Success")
+                                   
                                                  
                                
                               
@@ -254,48 +255,50 @@ async function getTotalBalance(params ,callback){
               
                 return callback(null , "There is not enough balance, recharge with the required value")
             }else{
-                totalbalance.findOneAndUpdate({"userId":params.userId},{"totalamount":Number(result.totalamount - params.amount).toFixed(2)}).then((result)=>{
-                    
-            })
+               
+                totalbalance.findOneAndUpdate({"userId":params.userId},{"totalamount":Number(result.totalamount - params.amount).toFixed(2)})
+                
                
             }
            
               
             
         }else{
-            return callback(null , "There is not enough balance, recharge with the required value")
+            order.findOne({$and:[{"productes":params.id},{"userId":params.userId}]},async function(err,result){
+                if (err) { 
+                   return callback(err)
+                }else{
+                    if (result) {
+                        //return  callback(null ,"exist")
+                    }else{
+                        const ordermodel = order({
+                            userId: params.userId,
+                            productes: params.id,
+                            orderstatus: "Pending", 
+                            amount:params.amount  
+                        })
+                        ordermodel.save().then(async(response)=>{
+                            if (response) {
+                                model.orderId =response.id;
+                                return  callback(null,model)
+                            }else{
+                                model.orderId =response.id;
+                                return  callback(null,model)
+                            }
+                          
+                        }).catch((e)=>{ 
+                            return callback(e)
+                        })
+    
+                    }
+                  
+                }      
+            })
+
+           return callback(null , "There is not enough balance, recharge with the required value")
         }
 
-        order.findOne({$and:[{"productes":params.id},{"userId":params.userId}]},async function(err,result){
-            if (err) { 
-               return callback(err)
-            }else{
-                if (result) {
-                    //return  callback(null ,"exist")
-                }else{
-                    const ordermodel = order({
-                        userId: params.userId,
-                        productes: params.id,
-                        orderstatus: "Pending", 
-                        amount:params.amount  
-                    })
-                    ordermodel.save().then(async(response)=>{
-                        if (response) {
-                            model.orderId =response.id;
-                            return  callback(null,model)
-                        }else{
-                            model.orderId =response.id;
-                            return  callback(null,model)
-                        }
-                      
-                    }).catch((e)=>{ 
-                        return callback(e)
-                    })
-
-                }
-              
-            }      
-        })
+      
     }
     })
  }

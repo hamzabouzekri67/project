@@ -34,8 +34,8 @@ routes.post("/getBalance",balancecontrolles.findAll)
 
 routes.post("/transactions",balancecontrolles.findBalance)
 routes.post("/subtract",balancecontrolles.subBalance)
-
+ 
 routes.post("/comments",commentscontrolles.Addcomments)
 routes.post("/fetchComments",commentscontrolles.fetchComments)
 
-module.exports = routes
+module.exports = routes   
